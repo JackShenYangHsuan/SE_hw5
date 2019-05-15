@@ -1,6 +1,6 @@
 
 //Binary Search Tree Program
-#include "stdafx.h"
+#include "stdio.h"
 #include <iostream>
 #include <cstdlib>
 using namespace std;
@@ -12,7 +12,7 @@ private:
     {
         tree_node *left;
         tree_node *right;
-        int data
+        int data;
     };
     tree_node *root;
 
@@ -30,16 +30,15 @@ public:
     void postorder(tree_node *);
     void insert(int);
     void remove(int);
-}
+};
 
 // Smaller elements go left
 // larger elements go right
-viod
-BinarySearchTree::insert(int d)
+void BinarySearchTree::insert(int d)
 {
     tree_node *t = new tree_node;
     tree_node *parent;
-    t.data = d;
+    t->data = d;
     t->left = NULL;
     t->right = NULL;
     parent = NULL;
@@ -56,9 +55,9 @@ BinarySearchTree::insert(int d)
         {
             parent = curr;
             if (t->data < curr->data)
-                curr = curr->right;
-            else
                 curr = curr->left;
+            else
+                curr = curr->right;
         }
 
         if (t->data < parent->data)
@@ -68,7 +67,7 @@ BinarySearchTree::insert(int d)
     }
 }
 
-void BinarySearchTree : remove(int d)
+void BinarySearchTree::remove(int d)
 {
     //Locate the element
     int found = false;
@@ -84,7 +83,8 @@ void BinarySearchTree : remove(int d)
     {
         if (curr->data == d)
         {
-            found = true break;
+            found = true;
+            break;
         }
         else
         {
@@ -95,7 +95,7 @@ void BinarySearchTree : remove(int d)
                 curr = curr->left;
         }
     }
-    if (!found)
+    if (found)
     {
         cout << " Data found! " << endl;
         return;
@@ -107,9 +107,9 @@ void BinarySearchTree : remove(int d)
     // 3. we're removing a node with 2 children
 
     // Node with single child
-    if ((curr->left == NULL & curr->right != NULL) || (curr->left != NULL && curr->right == NULL))
+    if ((curr->left == NULL && curr->right != NULL) || (curr->left != NULL && curr->right == NULL))
     {
-        if (curr->left = NULL && curr->right != NULL)
+        if (curr->left == NULL && curr->right != NULL)
         {
             if (parent->left == curr)
             {
@@ -119,7 +119,7 @@ void BinarySearchTree : remove(int d)
             else
             {
                 parent->right = curr->right;
-                delete cur;
+                delete curr;
             }
         }
         else // left child present, no right child
@@ -132,7 +132,7 @@ void BinarySearchTree : remove(int d)
             else
             {
                 parent->right = curr->left;
-                delete curr
+                delete curr;
             }
         }
         return;
@@ -143,31 +143,30 @@ void BinarySearchTree : remove(int d)
     {
         if (parent->left == curr)
             parent->left = NULL;
+        else
+            parent->right = NULL;
+        delete curr;
+        return;
     }
-    else
-        parent->right = NULL;
-    delete curr;
-    return;
-}
 
-//Node with 2 children
-// replace node with smallest value in right subtree
-if (curr->left != NULL && curr->right != NULL)
-{
-    tree_node *chkr;
-    ckhr = curr->right;
-    if ((chkr->left == NULL) && (chkr->right == NULL))
+    //Node with 2 children
+    // replace node with smallest value in right subtree
+    if (curr->left != NULL && curr->right != NULL)
     {
-        curr = chkr;
-        delete chkr;
-        curr->right = NULL;
-    }
-    else // right child has children
-    {
-        //if the node's right child has a left child
-        // Move all the way down left to locate smallest element
+        tree_node *chkr;
+        chkr = curr->right;
+        if ((chkr->left == NULL) && (chkr->right == NULL))
+        {
+            curr = chkr;
+            delete chkr;
+            curr->right = NULL;
+        }
+        else // right child has children
+        {
+            //if the node's right child has a left child
+            // Move all the way down left to locate smallest element
 
-        if (curr->right)->left != NULL)
+            if ((curr->right)->left != NULL)
             {
                 tree_node *lcurr;
                 tree_node *lcurrp;
@@ -175,24 +174,24 @@ if (curr->left != NULL && curr->right != NULL)
                 lcurr = (curr->right)->left;
                 while (lcurr->left != NULL)
                 {
-                    lcurrp = lcurr
-                        lcurr = lcurr->left;
+                    lcurrp = lcurr;
+                    lcurr = lcurr->left;
                 }
                 curr->data = lcurr->data;
                 delete lcurr;
                 lcurrp->left = NULL;
             }
-        else
-        {
-            tree_node *tmp;
-            tmp = curr->right;
-            curr->data = tmp->data
-                             curr->right = tmp->right;
-            delete tmp;
+            else
+            {
+                tree_node *tmp;
+                tmp = curr->right;
+                curr->data = tmp->data;
+                curr->right = tmp->right;
+                delete tmp;
+            }
         }
+        return;
     }
-    return;
-}
 }
 
 void BinarySearchTree::print_inorder()
@@ -218,7 +217,7 @@ void BinarySearchTree::inorder(tree_node *p)
 
 void BinarySearchTree::print_preorder()
 {
-    preorder(rooot);
+    preorder(root);
 }
 
 void BinarySearchTree::preorder(tree_node *p)
@@ -227,9 +226,7 @@ void BinarySearchTree::preorder(tree_node *p)
     {
         cout << " " << p->data << " ";
         if (p->left)
-        {
-        }
-        preorder(p->left);
+            preorder(p->left);
         if (p->right)
             preorder(p->right);
     }
@@ -244,7 +241,7 @@ void BinarySearchTree::print_postorder()
 
 void BinarySearchTree::postorder(tree_node *p)
 {
-    if (p = NULL)
+    if (p != NULL)
     {
         if (p->left)
             postorder(p->left);
@@ -279,7 +276,7 @@ int main()
         case 1:
             cout << " Enter Number to be inserted : ";
             cin >> tmp;
-            b.inssert(tmp);
+            b.insert(tmp);
             break;
         case 2:
             cout << endl;
@@ -302,7 +299,7 @@ int main()
         case 5:
             cout << " Enter data to be deleted : ";
             cin >> tmp1;
-            b.remove(ch);
+            b.remove(tmp1);
             break;
         case 6:
             system("pause");
